@@ -1,12 +1,12 @@
 const frameworkControls = [
-    { id: "def-1", name: "Enforce Multi-Factor Authentication (MFA)", description: "Protects enterprise identities and administrative entrypoints using session tokens.", cost: 4000, mitigates: "T1110", ncsc: "NCSC: Identity Management", iso: "ISO 27001 A.8.5", boost: 8 },
-    { id: "def-2", name: "Deploy Centralised Log Aggregation (SIEM)", description: "Ingests host telemetry, network traffic flows, and access events into automated parsing.", cost: 6500, mitigates: "T1059", ncsc: "NCSC: Logging Made Easy", iso: "ISO 27001 A.8.16", boost: 10 },
-    { id: "def-3", name: "Implement Internal Network Segmentation", description: "Enforces isolation barriers between production segments via internal firewalls to block horizontal steps.", cost: 5000, mitigates: "T1021", ncsc: "NCSC: Enterprise Segregation", iso: "ISO 27001 A.8.22", boost: 8 },
-    { id: "def-4", name: "Secure Email Gateways & Phishing Filters", description: "Applies content analysis, checking inbound corporate queues.", cost: 3000, mitigates: "T1566", ncsc: "NCSC: Phishing Defenses", iso: "ISO 27001 A.8.10", boost: 6 },
-    { id: "def-5", name: "Automated Patch Management Systems", description: "Schedules automated distribution of operating system and third-party software updates.", cost: 4500, mitigates: "T1190", ncsc: "NCSC: Vulnerability Management", iso: "ISO 27001 A.8.19", boost: 8 },
-    { id: "def-6", name: "Endpoint Detection & Response (EDR) Agents", description: "Monitors processing paths and checks behavior anomalies on system hosts.", cost: 7000, mitigates: "T1068", ncsc: "NCSC: Device Security", iso: "ISO 27001 A.8.17", boost: 12 },
-    { id: "def-7", name: "Principle of Least Privilege (RBAC)", description: "Strictly audits administrative groups and strips localized admin user configurations.", cost: 2500, mitigates: "T1078", ncsc: "NCSC: Identity Management", iso: "ISO 27001 A.5.15", boost: 6 },
-    { id: "def-8", name: "Application Whitelisting Policies", description: "Enforces rules blocking untrusted executable software binaries from loading.", cost: 3500, mitigates: "T1204", ncsc: "NCSC: Device Security", iso: "ISO 27001 A.8.18", boost: 7 }
+    { id: "def-1", name: "Enforce Multi-Factor Authentication (MFA)", description: "Protects enterprise identities and administrative entrypoints using out-of-band session tokens.", cost: 4000, mitigates: "T1110", ncsc: "NCSC: Identity Management", iso: "ISO 27001 A.8.5", boost: 8 },
+    { id: "def-2", name: "Deploy Centralised Log Aggregation (SIEM)", description: "Ingests host telemetry, network traffic flows, and access events into an automated parsing engine.", cost: 6500, mitigates: "T1059", ncsc: "NCSC: Logging Made Easy", iso: "ISO 27001 A.8.16", boost: 10 },
+    { id: "def-3", name: "Implement Internal Network Segmentation", description: "Enforces isolation barriers between production segments via internal firewalls to stop lateral pivots.", cost: 5000, mitigates: "T1021", ncsc: "NCSC: Enterprise Segregation", iso: "ISO 27001 A.8.22", boost: 8 },
+    { id: "def-4", name: "Secure Email Gateways & Phishing Filters", description: "Applies heuristic content analysis, SPF/DKIM verification, and link rewriting to corporate messaging inbound queues.", cost: 3000, mitigates: "T1566", ncsc: "NCSC: Phishing Defenses", iso: "ISO 27001 A.8.10", boost: 6 },
+    { id: "def-5", name: "Automated Patch Management Infrastructure", description: "Schedules automated scanning cycles and distribution of operating system and third-party hotfixes.", cost: 4500, mitigates: "T1190", ncsc: "NCSC: Vulnerability Management", iso: "ISO 27001 A.8.19", boost: 8 },
+    { id: "def-6", name: "Endpoint Detection and Response (EDR) Agents", description: "Monitors process trees and file integrity on physical devices using behavioral heuristics to catch zero-days.", cost: 7000, mitigates: "T1068", ncsc: "NCSC: Device Security", iso: "ISO 27001 A.8.17", boost: 12 },
+    { id: "def-7", name: "Principle of Least Privilege (RBAC Execution)", description: "Strictly audits administrative groups, strips local administrative rights, and implements Role-Based Access Control.", cost: 2500, mitigates: "T1078", ncsc: "NCSC: Identity Management", iso: "ISO 27001 A.5.15", boost: 6 },
+    { id: "def-8", name: "Application Whitelisting & AppLocker Policies", description: "Enforces strict structural rules blocking unapproved binary software applications from loading on corporate hosts.", cost: 3500, mitigates: "T1204", ncsc: "NCSC: Device Security", iso: "ISO 27001 A.8.18", boost: 7 }
 ];
 
 const attackArchetypes = [
@@ -41,38 +41,26 @@ let state = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-    injectTimerWidget(); // Injected first to anchor its layout position securely
     injectBoardButton();
     updateDashboard();
     triggerThreatWave();
     document.getElementById("next-turn-btn").addEventListener("click", commitTurnAction);
 });
 
-function injectTimerWidget() {
-    // FIX: Check if visual timer is already present to stop layout duplication stacking
-    if (document.getElementById("timer-display")) return;
-
-    const mainContent = document.querySelector(".sidebar");
-    const timerDiv = document.createElement("div");
-    timerDiv.className = "metric-card";
-    timerDiv.style.borderColor = "var(--alert)";
-    timerDiv.innerHTML = `
-        <span class="metric-label" style="color: var(--alert);">⚠️ Incident Response SLA</span>
-        <span class="metric-value text-alert" id="timer-display">30s</span>
-    `;
-    mainContent.insertBefore(timerDiv, mainContent.children[3]);
-}
-
 function injectBoardButton() {
-    // FIX: Check if board pitch button interface component is present before appending layout hooks
     if (document.getElementById("board-request-btn")) return;
-
-    const container = document.getElementById("board-btn-container");
+    const sidebar = document.querySelector(".sidebar");
+    
+    const container = document.createElement("div");
+    container.id = "board-btn-container";
+    container.style.width = "100%";
     container.innerHTML = `
         <button id="board-request-btn" class="btn-action" style="border-color: var(--warning); color: var(--warning);">
             💼 Pitch Board for Budget
         </button>
     `;
+    
+    sidebar.insertBefore(container, document.getElementById("next-turn-btn"));
     document.getElementById("board-request-btn").addEventListener("click", requestBoardBudget);
 }
 
@@ -82,17 +70,21 @@ function updateDashboard() {
     document.getElementById("security-score").innerText = `${state.securityScore} / 100`;
     
     const scoreBar = document.getElementById("score-bar");
-    scoreBar.style.width = `${state.securityScore}%`;
+    if(scoreBar) scoreBar.style.width = `${state.securityScore}%`;
     
+    const rating = document.getElementById("compliance-rating");
     if (state.securityScore < 45) {
-        scoreBar.style.backgroundColor = "var(--alert)";
-        document.getElementById("compliance-rating").innerText = "Non-Compliant";
+        if(scoreBar) scoreBar.style.backgroundColor = "var(--alert)";
+        rating.innerText = "Non-Compliant";
+        rating.className = "text-alert";
     } else if (state.securityScore < 75) {
-        scoreBar.style.backgroundColor = "var(--warning)";
-        document.getElementById("compliance-rating").innerText = "Partial Alignment";
+        if(scoreBar) scoreBar.style.backgroundColor = "var(--warning)";
+        rating.innerText = "Partial Alignment";
+        rating.className = "text-warning";
     } else {
-        scoreBar.style.backgroundColor = "var(--success)";
-        document.getElementById("compliance-rating").innerText = "ISO Certified / Compliant";
+        if(scoreBar) scoreBar.style.backgroundColor = "var(--success)";
+        rating.innerText = "ISO Certified / Compliant";
+        rating.className = "text-success";
     }
 
     const actionBtn = document.getElementById("next-turn-btn");
@@ -108,27 +100,21 @@ function updateDashboard() {
     } else if (state.isAttackActive) {
         if (state.controlDeployedThisTurn) {
             actionBtn.disabled = false;
-            actionBtn.innerText = "Commit Response";
+            actionBtn.innerText = "Commit Selected Control Plan";
             actionBtn.style.backgroundColor = "var(--success)";
         } else {
             actionBtn.disabled = true;
-            actionBtn.innerText = "Mitigation Required...";
+            actionBtn.innerText = "Mitigation Action Required...";
             actionBtn.style.backgroundColor = "var(--border-color)";
         }
 
         if (boardBtn) {
-            const meetsBudgetCriteria = state.budget < 7000;
-            if (!meetsBudgetCriteria) {
-                boardBtn.disabled = true;
-                boardBtn.style.opacity = "0.3";
-            } else {
-                boardBtn.disabled = state.boardRequestUsedThisTurn || state.controlDeployedThisTurn;
-                boardBtn.style.opacity = (state.boardRequestUsedThisTurn || state.controlDeployedThisTurn) ? "0.3" : "1";
-            }
+            boardBtn.disabled = (state.budget >= 7000 || state.boardRequestUsedThisTurn || state.controlDeployedThisTurn);
+            boardBtn.style.opacity = boardBtn.disabled ? "0.4" : "1";
         }
     } else {
         actionBtn.disabled = false;
-        actionBtn.innerText = "Next Threat Wave";
+        actionBtn.innerText = "Advance to Next Wave";
         actionBtn.style.backgroundColor = "var(--accent)";
         if(boardBtn) boardBtn.disabled = true;
     }
@@ -159,7 +145,7 @@ function handleTimeoutBreach() {
     
     const structuralImpact = Math.floor(Math.random() * 8) + 15; 
     state.securityScore = Math.max(0, state.securityScore - structuralImpact);
-    logToTerminal(`[CRITICAL] Attacker bypassed standard monitoring frameworks. Health dropped by ${structuralImpact}!`, "fail");
+    logToTerminal(`[CRITICAL] Attacker bypassed standard frameworks. Health rating down by ${structuralImpact}!`, "fail");
 
     updateDashboard();
     renderMarketplace();
@@ -169,16 +155,16 @@ function requestBoardBudget() {
     if (!state.isAttackActive || state.boardRequestUsedThisTurn || state.controlDeployedThisTurn || state.budget >= 7000) return;
 
     state.boardRequestUsedThisTurn = true;
-    logToTerminal(`\n[BOARD] Reviewing emergency risk profiles...`, "system");
+    logToTerminal(`\n[BOARD MEETING] Presenting fiscal deficit context and infrastructure risks...`, "system");
 
     const isApproved = Math.random() > (state.securityScore > 50 ? 0.4 : 0.6);
 
     if (isApproved) {
         const grantedAmount = 2500 + (Math.floor(Math.random() * 8) * 500); 
         state.budget += grantedAmount;
-        logToTerminal(`[APPROVED] Injection authorized: +£${grantedAmount.toLocaleString()}`, "success");
+        logToTerminal(`[BOARD APPROVED] Emergency funding authorized: +£${grantedAmount.toLocaleString()}`, "success");
     } else {
-        logToTerminal(`[DENIED] Pitch rejected: Resolve gaps with available assets.`, "fail");
+        logToTerminal(`[BOARD REJECTED] Pitch failed. Optimize existing assets.`, "fail");
     }
 
     updateDashboard();
@@ -196,13 +182,13 @@ function triggerThreatWave() {
     state.activeAttack = {
         mitre: archetype.mitre,
         name: `${archetype.name} (${archetype.variants[Math.floor(Math.random() * archetype.variants.length)]})`,
-        description: `Flagged on ${archetype.systemTargets[Math.floor(Math.random() * archetype.systemTargets.length)]}. Origin: [${randomIOCs.ips[Math.floor(Math.random() * randomIOCs.ips.length)]}].`,
+        description: `Flagged on ${archetype.systemTargets[Math.floor(Math.random() * archetype.systemTargets.length)]}. Target IP Indicator: [${randomIOCs.ips[Math.floor(Math.random() * randomIOCs.ips.length)]}].`,
         counterId: archetype.counterId
     };
 
-    logToTerminal(`\n============== WAVE ${state.turn} / ${state.maxTurns} ==============`, "warning");
-    logToTerminal(`ALERT: MITRE ATT&CK [${state.activeAttack.mitre}] - ${state.activeAttack.name}`, "warning");
-    logToTerminal(`SIEM: ${state.activeAttack.description}`, "system");
+    logToTerminal(`\n============== LIVE WAVE INCIDENT ${state.turn} / ${state.maxTurns} ==============`, "warning");
+    logToTerminal(`ALERT: Threat indicator generated! Vector: MITRE ATT&CK [${state.activeAttack.mitre}]`, "warning");
+    logToTerminal(`Raw Log Trace: ${state.activeAttack.description}`, "system");
 
     startPhaseTimer(); 
     updateDashboard();
@@ -222,15 +208,15 @@ function renderMarketplace() {
         block.className = `control-block ${alreadyOwns ? 'deployed' : ''}`;
         block.innerHTML = `
             <div>
-                <h3 style="font-size:0.9rem; margin-bottom:2px;">${def.name}</h3>
-                <p style="font-size:0.75rem; color:var(--text-secondary); line-height:1.3;">${def.description}</p>
+                <h3 style="font-size:0.9rem; margin-bottom:4px;">${def.name}</h3>
+                <p style="font-size:0.75rem; color:var(--text-secondary); line-height:1.4; margin-bottom:6px;">${def.description}</p>
                 <div class="meta-tags">
-                    <span class="tag mitre">${def.mitigates}</span>
+                    <span class="tag mitre">Mitigates: ${def.mitigates}</span>
                     <span class="tag ncsc">${def.ncsc}</span>
                     <span class="tag iso">${def.iso}</span>
                 </div>
             </div>
-            <button id="btn-${def.id}" class="btn-action" ${shouldDisable ? 'disabled' : ''}>
+            <button id="btn-${def.id}" class="btn-primary" style="font-size:0.8rem;" ${shouldDisable ? 'disabled' : ''}>
                 ${alreadyOwns ? 'Active' : `Deploy [£${def.cost}]`}
             </button>
         `;
@@ -252,20 +238,20 @@ function handleResponseSelection(selectedControl) {
     if (!alreadyOwns) {
         state.budget -= selectedControl.cost;
         state.deployedDefenses.push(selectedControl.id);
-        logToTerminal(`[STAGED] Allocated £${selectedControl.cost} for implementation.`, "system");
+        logToTerminal(`[RESPONSE REGISTERED] Expended £${selectedControl.cost} to implement defense framework line.`, "system");
     } else {
-        logToTerminal(`[STAGED] Re-verified operational control footprint.`, "success");
+        logToTerminal(`[RESPONSE REGISTERED] Re-activated existing control asset: ${selectedControl.name}.`, "success");
     }
 
     state.nextActionStep = () => {
         state.isAttackActive = false;
         if (matchesVector) {
             state.securityScore = Math.min(100, state.securityScore + selectedControl.boost);
-            logToTerminal(`[SUCCESS] Mitigated threat using framework guidelines.`, "success");
+            logToTerminal(`[MITIGATION SUCCESS] Target neutralized via framework guidelines.`, "success");
         } else {
             const structuralImpact = Math.floor(Math.random() * 8) + 12;
             state.securityScore = Math.max(0, state.securityScore - structuralImpact);
-            logToTerminal(`[BREACH] Control mismatch. Defense layer bypassed! Damage: -${structuralImpact}`, "fail");
+            logToTerminal(`[BREACH CRITICAL] Control mismatch! Threat vector bypassed defenses. Health penalty: -${structuralImpact}`, "fail");
         }
         state.turn++;
         updateDashboard();
@@ -289,13 +275,16 @@ function logToTerminal(msg, mode) {
     const feed = document.getElementById("log-feed");
     const entry = document.createElement("div");
     entry.className = `log-entry ${mode}`;
-    entry.innerText = msg;
+    
+    const timestamp = new Date().toLocaleTimeString();
+    entry.innerText = `[${timestamp}] ${msg}`;
+    
     feed.appendChild(entry);
     feed.scrollTop = feed.scrollHeight; 
 }
 
 function triggerIncidentReport() {
     logToTerminal(`\n================================================`, "system");
-    logToTerminal(`20-PHASE SCENARIO RUN REVIEW COMPLETE`, "system");
-    logToTerminal(`Final Health Rating Index: ${state.securityScore}/100.`, state.securityScore >= 75 ? "success" : "fail");
+    logToTerminal(`20-CYCLE CONSOLE REVIEW COMPLETE`, "system");
+    logToTerminal(`Final Health Posture Index: ${state.securityScore}/100.`, state.securityScore >= 75 ? "success" : "fail");
 }
