@@ -2,74 +2,68 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>RiskEngine Mobile-Ready - Incident Simulator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <title>Clyde Cyber RiskEngine - Enterprise Console</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="app-container">
-        <!-- Sidebar / Status Header panel -->
         <aside class="sidebar">
             <div class="brand">
                 <h2>Clyde Cyber RiskEngine</h2>
-                <span class="version">v2.5 Mobile-Optimized</span>
+                <span class="version">v2.9 Mobile-First Stack</span>
             </div>
             
-            <div class="stats-grid">
-                <div class="metric-card">
-                    <span class="metric-label">Budget</span>
-                    <span class="metric-value" id="budget">£12,000</span>
-                </div>
-
-                <div class="metric-card">
-                    <span class="metric-label">SLA Timer</span>
-                    <span class="metric-value text-alert" id="timer-display">30s</span>
-                </div>
+            <div class="metric-card">
+                <span class="metric-label">Operational Budget</span>
+                <span class="metric-value" id="budget">£12,000</span>
             </div>
 
-            <div class="metric-card full-width">
+            <div class="metric-card">
                 <span class="metric-label">Risk Posture Score</span>
                 <div class="progress-bar-container">
                     <div class="progress-bar" id="score-bar" style="width: 60%;"></div>
                 </div>
-                <span class="metric-value sub" id="security-score">60/100</span>
+                <span class="metric-value sub" id="security-score">60 / 100</span>
             </div>
 
             <div class="status-widget">
-                <div class="status-row"><span>Phase:</span> <strong id="turn-count">1 / 20</strong></div>
-                <div class="status-row"><span>Compliance:</span> <strong id="compliance-rating">Partial</strong></div>
+                <h3>Simulation Progress</h3>
+                <div class="status-row"><span>Current Phase:</span> <strong id="turn-count">1 / 20</strong></div>
+                <div class="status-row"><span>SLA Timer:</span> <strong class="text-alert" id="timer-display">30s</strong></div>
+                <div class="status-row"><span>Compliance Status:</span> <strong id="compliance-rating">Partial Alignment</strong></div>
             </div>
 
             <div id="board-btn-container"></div>
-            <button id="next-turn-btn" class="btn-primary">Commit Controls</button>
+            <button id="next-turn-btn" class="btn-primary">Commit Controls & Run Wave</button>
         </aside>
 
-        <!-- Main Workspace Panel -->
         <main class="main-content">
-            <!-- Mobile Summary Block -->
-            <div class="mobile-brief">
-                <p><strong>Objective:</strong> Review SIEM logs under time pressure, identify the active MITRE attack vector, and deploy corresponding NCSC/ISO 27001 controls before the SLA countdown timer expires.</p>
-            </div>
+            <header class="dashboard-header">
+                <div class="briefing">
+                    <h1>Enterprise Security Risk Assessment</h1>
+                    <p><strong>Student Objective:</strong> Review live SIEM telemetry feeds under pressure. Map threats to MITRE ATT&CK techniques, manage cash flow, and deploy NCSC/ISO 27001 countermeasures before the SLA clock runs down.</p>
+                </div>
+            </header>
 
             <div class="workspace-grid">
-                <!-- Log Console Display Section -->
-                <section class="card-section log-section">
+                <section class="card-section panel-logs">
                     <div class="section-header">
-                        <h2>SIEM Operations & Audit Feed</h2>
+                        <h2>SIEM Operations & Incident Log Feed</h2>
+                        <p>Real-time system event trackers and response evaluation analytics.</p>
                     </div>
                     <div id="log-feed" class="terminal-log">
-                        <div class="log-entry system">[SYSTEM INIT] Awaiting control footprint choice...</div>
+                        <div class="log-entry system">[SYSTEM INIT] Security operations engine active. Awaiting threat validation vector footprint...</div>
                     </div>
                 </section>
 
-                <!-- Framework Controls Marketplace Panel -->
-                <section class="card-section market-section">
+                <section class="card-section panel-market">
                     <div class="section-header">
                         <h2>Framework Control Marketplace</h2>
+                        <p>Deploy baseline administrative or technical assets using available cash lines.</p>
                     </div>
                     <div id="controls-list" class="scroll-container">
-                        <!-- Dynamic Injection -->
-                    </div>
+                        </div>
                 </section>
             </div>
         </main>
