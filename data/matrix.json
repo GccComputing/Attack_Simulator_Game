@@ -1,0 +1,74 @@
+{
+  "defenses": [
+    {
+      "id": "def-1",
+      "name": "Enforce Multi-Factor Authentication (MFA)",
+      "description": "Protects administrative profiles and cloud accounts from unauthorized entry using dynamic session tokens.",
+      "cost": 4000,
+      "mitigates": "T1110 (Brute Force)",
+      "ncsc": "NCSC 10 Steps: Identity & Access Management",
+      "iso": "ISO 27001:2022 A.8.5 Secure Authentication",
+      "boost": 15
+    },
+    {
+      "id": "def-2",
+      "name": "Deploy Centralised Log Aggregation (SIEM)",
+      "description": "Ingests active authentication logs, host event trackers, and firewall records into a security operations engine.",
+      "cost": 6500,
+      "mitigates": "T1059 (Command & Script Execution)",
+      "ncsc": "NCSC Architecture: Logging Made Easy",
+      "iso": "ISO 27001:2022 A.8.16 Monitoring Activities",
+      "boost": 20
+    },
+    {
+      "id": "def-3",
+      "name": "Implement Internal Network Segmentation",
+      "description": "Isolates processing environments and host assets via internal state firewalls to block horizontal lateral hops.",
+      "cost": 5000,
+      "mitigates": "T1021 (Remote Services)",
+      "ncsc": "NCSC Blueprint: Enterprise Segregation",
+      "iso": "ISO 27001:2022 A.8.22 Network Segregation",
+      "boost": 15
+    },
+    {
+      "id": "def-4",
+      "name": "Secure Email Gateways & Phishing Filtering",
+      "description": "Applies heuristic body inspections, DMARC validation controls, and link parsing to corporate messaging boxes.",
+      "cost": 3000,
+      "mitigates": "T1566 (Phishing Execution)",
+      "ncsc": "NCSC Advisory: Defending Against Phishing",
+      "iso": "ISO 27001:2022 A.8.10 Information Deletion & Filtering",
+      "boost": 10
+    }
+  ],
+  "attacks": [
+    {
+      "id": "atk-1",
+      "name": "Spearphishing Threat Vector",
+      "mitre": "T1566",
+      "description": "An adversary targets internal HR contacts with custom malicious payloads hidden inside dynamic document objects.",
+      "counterId": "def-4"
+    },
+    {
+      "id": "atk-2",
+      "name": "SSH Perimeter Brute Force",
+      "mitre": "T1110",
+      "description": "Automated threat components scan open outward-facing nodes, triggering dictionary-based credential access scripts.",
+      "counterId": "def-1"
+    },
+    {
+      "id": "atk-3",
+      "name": "Obfuscated Script Execution",
+      "mitre": "T1059",
+      "description": "Malicious active processes generate localized, encrypted command-line statements attempting memory hijacking scripts.",
+      "counterId": "def-2"
+    },
+    {
+      "id": "atk-4",
+      "name": "RDP Lateral Movement Pivot",
+      "mitre": "T1021",
+      "description": "Having compromised a localized endpoint, the threat actor attempts remote service handshakes to bridge into core administrative nodes.",
+      "counterId": "def-3"
+    }
+  ]
+}
