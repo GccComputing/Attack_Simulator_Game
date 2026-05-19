@@ -2,73 +2,73 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RiskEngine Architecture - Incident Simulator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>RiskEngine Mobile-Ready - Incident Simulator</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="app-container">
-        <!-- Sidebar: Simulation Controls & Status -->
+        <!-- Sidebar / Status Header panel -->
         <aside class="sidebar">
             <div class="brand">
                 <h2>Clyde Cyber RiskEngine</h2>
-                <span class="version">v2.1 Stable</span>
+                <span class="version">v2.5 Mobile-Optimized</span>
             </div>
             
-            <div class="metric-card">
-                <span class="metric-label">Operational Budget</span>
-                <span class="metric-value" id="budget">£25,000</span>
+            <div class="stats-grid">
+                <div class="metric-card">
+                    <span class="metric-label">Budget</span>
+                    <span class="metric-value" id="budget">£12,000</span>
+                </div>
+
+                <div class="metric-card">
+                    <span class="metric-label">SLA Timer</span>
+                    <span class="metric-value text-alert" id="timer-display">30s</span>
+                </div>
             </div>
 
-            <div class="metric-card">
+            <div class="metric-card full-width">
                 <span class="metric-label">Risk Posture Score</span>
                 <div class="progress-bar-container">
-                    <div class="progress-bar" id="score-bar" style="width: 50%;"></div>
+                    <div class="progress-bar" id="score-bar" style="width: 60%;"></div>
                 </div>
-                <span class="metric-value sub" id="security-score">50/100</span>
+                <span class="metric-value sub" id="security-score">60/100</span>
             </div>
 
             <div class="status-widget">
-                <h3>Simulation Progress</h3>
-                <div class="status-row"><span>Current Phase:</span> <strong id="turn-count">1 / 5</strong></div>
-                <div class="status-row"><span>Active Threats:</span> <strong class="text-alert" id="active-threats">High</strong></div>
-                <div class="status-row"><span>Compliance Rating:</span> <strong id="compliance-rating">Non-Compliant</strong></div>
+                <div class="status-row"><span>Phase:</span> <strong id="turn-count">1 / 20</strong></div>
+                <div class="status-row"><span>Compliance:</span> <strong id="compliance-rating">Partial</strong></div>
             </div>
 
-            <button id="next-turn-btn" class="btn-primary">Commit Controls & Run Simulation</button>
+            <div id="board-btn-container"></div>
+            <button id="next-turn-btn" class="btn-primary">Commit Controls</button>
         </aside>
 
-        <!-- Main Content View -->
+        <!-- Main Workspace Panel -->
         <main class="main-content">
-            <!-- Header/Onboarding Context -->
-            <header class="dashboard-header">
-                <div class="briefing">
-                    <h1>Enterprise Security Risk Assessment</h1>
-                    <p><strong>Student Objective:</strong> You have been appointed as the Information Security Manager. Your network infrastructure is actively being targeted by an Advanced Persistent Threat (APT). Balance your budget to deploy technical and administrative controls mapped to <strong>ISO 27001:2022</strong> and <strong>NCSC blueprints</strong> to mitigate emerging <strong>MITRE ATT&CK</strong> tactics.</p>
-                </div>
-            </header>
+            <!-- Mobile Summary Block -->
+            <div class="mobile-brief">
+                <p><strong>Objective:</strong> Review SIEM logs under time pressure, identify the active MITRE attack vector, and deploy corresponding NCSC/ISO 27001 controls before the SLA countdown timer expires.</p>
+            </div>
 
-            <!-- Workspace Grid -->
             <div class="workspace-grid">
-                <!-- Left Column: Controls Marketplace -->
-                <section class="card-section">
+                <!-- Log Console Display Section -->
+                <section class="card-section log-section">
                     <div class="section-header">
-                        <h2>Framework Control Marketplace</h2>
-                        <p>Deploy defensive countermeasures using available budget.</p>
+                        <h2>SIEM Operations & Audit Feed</h2>
                     </div>
-                    <div id="controls-list" class="scroll-container">
-                        <!-- Dynamic Injection -->
+                    <div id="log-feed" class="terminal-log">
+                        <div class="log-entry system">[SYSTEM INIT] Awaiting control footprint choice...</div>
                     </div>
                 </section>
 
-                <!-- Right Column: Live SIEM/Audit Logs -->
-                <section class="card-section">
+                <!-- Framework Controls Marketplace Panel -->
+                <section class="card-section market-section">
                     <div class="section-header">
-                        <h2>SIEM Operations & Compliance Audit Feed</h2>
-                        <p>Real-time telemetry, threat detection logs, and standard gap analysis.</p>
+                        <h2>Framework Control Marketplace</h2>
                     </div>
-                    <div id="log-feed" class="terminal-log">
-                        <div class="log-entry system">[SYSTEM INIT] Awaiting control profile deployment. Review infrastructure vulnerabilities below...</div>
+                    <div id="controls-list" class="scroll-container">
+                        <!-- Dynamic Injection -->
                     </div>
                 </section>
             </div>
